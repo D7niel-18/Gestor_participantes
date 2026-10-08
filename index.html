@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de Participantes del Evento</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- Carga de scripts en orden de dependencia usando defer -->
+  <script src="js/funciones.js" defer></script>
+  <script src="js/interfaz.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Gestor de Inscripciones</h1>
+    
+    <!-- Configuración de Preferencias -->
+    <section id="sec-preferencias">
+      <label for="select-tema">Tema:</label>
+      <select id="select-tema">
+        <option value="claro">Claro</option>
+        <option value="oscuro">Oscuro</option>
+      </select>
+
+      <label for="select-tamano">Tamaño de letra:</label>
+      <select id="select-tamano">
+        <option value="normal">Normal</option>
+        <option value="grande">Grande</option>
+      </select>
+
+      <button id="btn-guardar-pref" type="button">Guardar Preferencias</button>
+      <button id="btn-restablecer-pref" type="button">Restablecer</button>
+    </section>
+
+    <button id="btn-abrir-ayuda" type="button">Ayuda e Info</button>
+  </header>
+
+  <main>
+    <!-- Formulario de Alta (con novalidate para gestionar la validación 100% por JS) -->
+    <section id="sec-alta">
+      <h2>Alta de Participante</h2>
+      <form id="form-participante" novalidate>
+        <div>
+          <label for="nombre">Nombre completo:</label>
+          <input type="text" id="nombre" name="nombre">
+        </div>
+
+        <div>
+          <label for="edad">Edad:</label>
+          <input type="number" id="edad" name="edad">
+        </div>
+
+        <div>
+          <label for="tipo">Tipo de participante:</label>
+          <select id="tipo" name="tipo">
+            <option value="">-- Selecciona un tipo --</option>
+            <option value="estudiante">Estudiante</option>
+            <option value="profesional">Profesional</option>
+            <option value="invitado">Invitado</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="modalidad">Modalidad:</label>
+          <select id="modalidad" name="modalidad">
+            <option value="">-- Selecciona modalidad --</option>
+            <option value="presencial">Presencial</option>
+            <option value="online">Online</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="experiencia">Experiencia (años):</label>
+          <input type="number" id="experiencia" name="experiencia" step="any">
+        </div>
+
+        <button type="submit" id="btn-guardar">Registrar Participante</button>
+      </form>
+      <div id="errores-form" class="mensaje-error"></div>
+    </section>
+
+    <!-- Filtros y Búsqueda -->
+    <section id="sec-filtros">
+      <h2>Búsqueda y Filtros</h2>
+      <input type="text" id="buscar-nombre" placeholder="Buscar por nombre...">
+      
+      <select id="filtro-modalidad">
+        <option value="todas">Todas las modalidades</option>
+        <option value="presencial">Presencial</option>
+        <option value="online">Online</option>
+      </select>
+      
+      <div id="mensaje-busqueda"></div>
+    </section>
+
+    <!-- Lista de Tarjetas (se genera dinámicamente con createElement) -->
+    <section id="sec-listado">
+      <h2>Participantes Inscritos</h2>
+      <div id="contenedor-tarjetas"></div>
+    </section>
+
+    <!-- Panel de Estadísticas Generales -->
+    <section id="sec-estadisticas">
+      <h2>Estadísticas Globales</h2>
+      <div id="panel-estadisticas"></div>
+    </section>
+
+    <!-- Importar / Exportar JSON -->
+    <section id="sec-json">
+      <h2>Gestión de Datos (JSON)</h2>
+      <textarea id="json-datos" rows="8" placeholder="El contenido JSON se mostrará o pegará aquí..."></textarea>
+      <div>
+        <button id="btn-exportar-json" type="button">Exportar JSON</button>
+        <button id="btn-importar-json" type="button">Importar JSON</button>
+      </div>
+      <div id="errores-json" class="mensaje-error"></div>
+    </section>
+
+    <!-- Panel incrustado Iframe -->
+    <section id="sec-iframe">
+      <h2>Panel del Evento (Iframe)</h2>
+      <iframe id="iframe-panel" src="panel.html" title="Panel Informativo del Evento"></iframe>
+    </section>
+  </main>
+</body>
+</html>

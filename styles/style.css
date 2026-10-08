@@ -1,0 +1,205 @@
+/* ==========================================================================
+   1. Variables CSS y Temas (Base, Oscuro y Tamaños)
+   ========================================================================== */
+:root {
+  --bg-color: #f4f6f8;
+  --text-color: #2c3e50;
+  --card-bg: #ffffff;
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --danger-color: #dc2626;
+  --danger-hover: #b91c1c;
+  --border-color: #cbd5e1;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --base-font-size: 16px;
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Tema Oscuro: Se activará cuando JavaScript añada la clase "tema-oscuro" al body */
+body.tema-oscuro {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --card-bg: #1e293b;
+  --border-color: #334155;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+/* Tamaño Grande: Se activará cuando JavaScript añada la clase "tamano-grande" al body */
+body.tamano-grande {
+  --base-font-size: 19px;
+}
+
+/* ==========================================================================
+   2. Estilos Generales y Maquetación
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--base-font-size);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  padding: 20px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: 25px;
+  border: 1px solid var(--border-color);
+}
+
+#sec-preferencias {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Disposición a dos columnas en pantallas medianas/grandes */
+@media (min-width: 900px) {
+  main {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  #sec-listado, #sec-iframe, #sec-json {
+    grid-column: span 2;
+  }
+}
+
+section {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+}
+
+h1, h2, h3 {
+  margin-bottom: 15px;
+}
+
+/* ==========================================================================
+   3. Formularios, Entradas y Botones
+   ========================================================================== */
+form div {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--primary-color);
+}
+
+button {
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Estilo para botón de borrado */
+button.btn-borrar {
+  background-color: var(--danger-color);
+}
+
+button.btn-borrar:hover {
+  background-color: var(--danger-hover);
+}
+
+/* ==========================================================================
+   4. Componentes Específicos (Tarjetas, Errores e Iframe)
+   ========================================================================== */
+.mensaje-error {
+  margin-top: 15px;
+  color: var(--danger-color);
+  font-weight: bold;
+  white-space: pre-line;
+}
+
+/* Grid dinámico para la colección de tarjetas que se generará en el DOM */
+#contenedor-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.tarjeta-participante {
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  margin-right: 5px;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+iframe {
+  width: 100%;
+  height: 220px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--bg-color);
+}

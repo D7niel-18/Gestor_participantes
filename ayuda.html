@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayuda del Sistema</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <script src="js/ayuda.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Guía de Uso e Información del Entorno</h1>
+  </header>
+
+  <main>
+    <section id="sec-instrucciones">
+      <h2>¿Cómo funciona la aplicación?</h2>
+      <ul>
+        <li><strong>Alta de participantes:</strong> Introduce los datos requeridos. Recuerda que la edad debe ser entre 0 y 120 y la experiencia entre 0 y 10.</li>
+        <li><strong>Listado:</strong> Cada participante se muestra en una tarjeta con sus datos formateados. Puedes dar de baja a un participante confirmando la acción.</li>
+        <li><strong>Filtros:</strong> Puedes buscar en tiempo real por nombre y filtrar simultáneamente por modalidad.</li>
+        <li><strong>Importación/Exportación:</strong> Puedes descargar la lista en JSON o cargar un conjunto completo de datos sustituyendo el actual si no contiene errores.</li>
+        <li><strong>Preferencias:</strong> Selecciona tu tema y tamaño de letra favoritos para conservarlos en tu navegador durante 30 días.</li>
+      </ul>
+    </section>
+
+    <section id="sec-info-navegador">
+      <h2>Datos de tu Navegador</h2>
+      <div id="datos-navegador"></div>
+    </section>
+  </main>
+</body>
+</html>
