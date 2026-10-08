@@ -1,4 +1,4 @@
-# Gestor_participantes
+- **LINK CHAT:** https://gemini.google.com/share/d/1IABlRg3wc1s_uc1GQyer-JTExZ_dl9mk?usp=sharing
 
 # Fase 1: Estructura del proyecto y entorno de ejecución
 
