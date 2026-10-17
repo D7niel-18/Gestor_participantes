@@ -49,7 +49,7 @@ function validarParticipante(datos) {
     if (nombreLimpio.length < 2 || nombreLimpio.length > 60) {
         errores.push("El nombre debe tener entre 2 y 60 caracteres.");
     }
-    if (!Number.isInteger(edadLimpia) || isNaN(edadLimpia) || !Number.isFinite(edadLimpia) || edadLimpia < 0 || edadLimpia > 120) {
+    if (String(datos.edad).trim() === "" || !Number.isInteger(edadLimpia) || isNaN(edadLimpia) || !Number.isFinite(edadLimpia) || edadLimpia < 0 || edadLimpia > 120) {
         errores.push("La edad debe ser un número entero válido entre 0 y 120.");
     }
     if (datos.tipo !== "estudiante" && datos.tipo !== "profesional" && datos.tipo !== "invitado") {
@@ -58,7 +58,7 @@ function validarParticipante(datos) {
     if (datos.modalidad !== "presencial" && datos.modalidad !== "online") {
         errores.push("La modalidad no es válida.");
     }
-    if (!Number.isFinite(experienciaLimpia) || experienciaLimpia < 0 || experienciaLimpia > 10) {
+    if (String(datos.experiencia).trim() === "" || !Number.isFinite(experienciaLimpia) || experienciaLimpia < 0 || experienciaLimpia > 10) {
         errores.push("La experiencia debe ser un número válido entre 0 y 10.");
     }
 
