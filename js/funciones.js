@@ -1,13 +1,14 @@
 /* Ejemplo: Colección de participantes */
-const participantes = [
+/* Se declara con let porque la importación de JSON sustituye la colección entera */
+let participantes = [
     {
-    id: 483721,
-    nombre: "Ana García",
-    edad: 17,
-    tipo: "estudiante",
-    modalidad: "presencial",
-    experiencia: 4,
-    fechaInscripcion: "2026-10-08T08:30:00.000Z"
+        id: 483721,
+        nombre: "Ana García",
+        edad: 17,
+        tipo: "estudiante",
+        modalidad: "presencial",
+        experiencia: 4,
+        fechaInscripcion: "2026-10-08T08:30:00.000Z"
     },
     {
         id: 483722,
@@ -40,7 +41,6 @@ function validarParticipante(datos) {
     const edadLimpia = Number(datos.edad);
 
     const experienciaLimpia = Number(datos.experiencia);
-    const esValido = true;
     const errores = [];
 
 
@@ -61,13 +61,78 @@ function validarParticipante(datos) {
     if (!Number.isFinite(experienciaLimpia) || experienciaLimpia < 0 || experienciaLimpia > 10) {
         errores.push("La experiencia debe ser un número válido entre 0 y 10.");
     }
+
+    // Es válido solo si no se ha acumulado ningún error
+    const esValido = errores.length === 0;
+
     return {esValido: esValido, errores: errores};
 }
 
+function validarColeccionJSON(datos) {
+
+    const errores = [];
+
+    // La colección debe ser un array
+
+    if (!Array.isArray(datos)) {
+        return {
+            esValido: false,
+            errores: ["El JSON debe ser un array de participantes."]
+        };
+    }
+
+    const idsVistos = new Set();
+
+    datos.forEach((participante, indice) => {
+
+        const posicion = `Participante ${indice + 1}`;
+
+        // Cada elemento debe ser un objeto
+
+        if (typeof participante !== "object" || participante === null || Array.isArray(participante)) {
+            errores.push(`${posicion}: no es un objeto válido.`);
+            return;
+        }
+
+        // Identificador: entero y sin duplicados dentro de la lista importada
+
+        if (!Number.isInteger(participante.id)) {
+            errores.push(`${posicion}: el id debe ser un número entero.`);
+        } else if (idsVistos.has(participante.id)) {
+            errores.push(`${posicion}: el id ${participante.id} está duplicado.`);
+        } else {
+            idsVistos.add(participante.id);
+        }
+
+        // Tipos de dato básicos (para no romper validarParticipante con datos raros)
+
+        if (typeof participante.nombre !== "string"
+            || typeof participante.edad !== "number"
+            || typeof participante.experiencia !== "number") {
+            errores.push(`${posicion}: nombre debe ser texto, y edad y experiencia deben ser números.`);
+        } else {
+            // Mismas reglas que en el registro
+            const resultado = validarParticipante(participante);
+            for (const error of resultado.errores) {
+                errores.push(`${posicion}: ${error}`);
+            }
+        }
+
+        // Fecha de inscripción válida
+
+        if (typeof participante.fechaInscripcion !== "string"
+            || isNaN(new Date(participante.fechaInscripcion).getTime())) {
+            errores.push(`${posicion}: la fecha de inscripción no es válida.`);
+        }
+    });
+
+    return {esValido: errores.length === 0, errores: errores};
+}
+
 function generarId(participantes){
-    const numero = Math.floor(Math.random() * (999999 - 100000) + 100000);
+    let numero = Math.floor(Math.random() * (999999 - 100000) + 100000);
     const numeroIntentosMaximos = 10;
-    const numeroIntentos = 0;
+    let numeroIntentos = 0;
 
     while (participantes.some(participante => participante.id === numero) && numeroIntentos < numeroIntentosMaximos) {
         numero = Math.floor(Math.random() * (999999 - 100000) + 100000);
@@ -258,15 +323,5 @@ function leerCookie(nombre) {
 }
 
 function borrarCookie(nombre) {
-
-    let cookie = nombre + "=;";
-    cookie += " Max-Age=0;";
-    cookie += " path=/;";
-    cookie += " SameSite=Lax;";
-
-    if (location.protocol === "https:") {
-        cookie += " Secure";
-    }
-
-    document.cookie = cookie;
+    document.cookie = `${nombre}=; Max-Age=0; path=/; SameSite=Lax`;
 }

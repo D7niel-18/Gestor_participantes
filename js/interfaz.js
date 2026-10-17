@@ -165,6 +165,50 @@ function aplicarFiltros() {
 // Escuchadores de eventos de búsqueda y filtro
 buscarNombre.addEventListener('input', aplicarFiltros);
 filtroModalidad.addEventListener('change', aplicarFiltros);
+ 
+// Exportar / importar JSON
+ 
+const areaJson = document.getElementById('json-datos');
+const erroresJson = document.getElementById('errores-json');
+const botonExportar = document.getElementById('btn-exportar-json');
+const botonImportar = document.getElementById('btn-importar-json');
+ 
+botonExportar.addEventListener('click', function () {
+    erroresJson.replaceChildren();
+    areaJson.value = JSON.stringify(participantes, null, 2);
+});
+ 
+botonImportar.addEventListener('click', function () {
+    erroresJson.replaceChildren();
+ 
+    let datos;
+ 
+    // 1. Sintaxis JSON
+    try {
+        datos = JSON.parse(areaJson.value);
+    } catch (error) {
+        erroresJson.textContent = 'El texto no es un JSON válido: ' + error.message;
+        return;
+    }
+ 
+    // 2. Validación de la colección completa (todo o nada)
+    const resultado = validarColeccionJSON(datos);
+ 
+    if (!resultado.esValido) {
+        for (const mensaje of resultado.errores) {
+            const parrafo = document.createElement('p');
+            parrafo.textContent = mensaje;
+            erroresJson.append(parrafo);
+        }
+        // No se modifica el array global
+        return;
+    }
+ 
+    // 3. Todo correcto: sustituir la colección y refrescar la pantalla
+    participantes = datos;
+    aplicarFiltros();
+    actualizarVistaEstadisticas();
+});
 
 // Mostrar los participantes al cargar la página
 aplicarFiltros();
